@@ -4,14 +4,7 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-workflow_dispatch:
-   inputs:
-    TestCases:
-        description: Select the test case name
-        type : choice
-        options:
-            -"AdactinHotelBooking"
-            -"AlertConcepts"
+
 jobs:
     test:
         timeout-minutes: 60
@@ -32,7 +25,7 @@ jobs:
           run: npx playwright install --with-deps
 
         - name: Run Playwright tests
-          run: npx playwright test -Dsuite="${{ github.event.inputs.TestCases }}
+          run: npx playwright test AdactinHotelBooking
 
         - uses: actions/upload-artifact@v4
           if: always()
