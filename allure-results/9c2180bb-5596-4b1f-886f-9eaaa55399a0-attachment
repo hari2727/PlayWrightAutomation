@@ -1,0 +1,78 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Book Hotel
+- Location: C:\Users\hariharan2\Documents\PlaywrightDemo\mytest\AdactinHotelBooking.spec.ts:6:5
+
+# Error details
+
+```
+Error: locator.selectOption: Target page, context or browser has been closed
+Call log:
+  - waiting for locator('#location')
+    - waiting for" http://adactinhotelapp.com/ForgotPassword.php" navigation to finish...
+    - navigated to "http://adactinhotelapp.com/ForgotPassword.php"
+
+    at HomePage.selectHotelType (C:\Users\hariharan2\Documents\PlaywrightDemo\pages\HomePage.ts:39:28)
+    at C:\Users\hariharan2\Documents\PlaywrightDemo\mytest\AdactinHotelBooking.spec.ts:21:3
+```
+
+# Test source
+
+```ts
+   1 | import { Locator, Page} from "playwright";
+   2 | import { expect } from "playwright/test";
+   3 | const testdata = JSON.parse(JSON.stringify(require('../testdata.json')))
+   4 | export  class HomePage{
+   5 | readonly getUserNameTitle : Locator;
+   6 | readonly getLocation : Locator;
+   7 | readonly getHotel:Locator;
+   8 | readonly getRoomType : Locator;
+   9 | readonly getNumberofRooms: Locator;
+  10 | readonly getCheckInDate:Locator
+  11 | readonly getCheckOutDate:Locator
+  12 | readonly getAdultsPerRoom : Locator
+  13 | readonly getChildrensPerRoom : Locator
+  14 | readonly getSearchButton:Locator
+  15 |
+  16 |
+  17 |     private page:Page;
+  18 |
+  19 |     constructor (page:Page){
+  20 |     this.page = page;
+  21 |     this.getUserNameTitle= page.locator('#username_show');
+  22 |     this.getLocation=page.locator('#location');
+  23 |     this.getHotel=page.locator('#hotels');
+  24 |     this.getRoomType=page.locator('#room_type');
+  25 |     this.getNumberofRooms=page.locator('#room_nos');
+  26 |     this.getCheckInDate=page.locator('#datepick_in')
+  27 |     this.getCheckOutDate=page.locator('#datepick_out')
+  28 |     this.getAdultsPerRoom=page.locator('#adult_room')
+  29 |     this.getChildrensPerRoom=page.locator('#child_room');
+  30 |     this.getSearchButton=page.locator('#Submit');
+  31 |     
+  32 | }
+  33 |
+  34 | async verifyTheUser() {
+  35 |     expect(this.getUserNameTitle).toBeVisible;
+  36 |     }
+  37 |  async selectHotelType(){
+  38 |     await this.verifyTheUser();
+> 39 |     await this.getLocation.selectOption(testdata.Location)
+     |                            ^ Error: locator.selectOption: Target page, context or browser has been closed
+  40 |     await this.getHotel.selectOption({index:4})
+  41 |     await this.getRoomType.selectOption(testdata.RoomType)
+  42 |     await this.getNumberofRooms.selectOption(testdata.NumberofRooms)
+  43 |     await this.getCheckInDate.fill(testdata.getCheckInDate);
+  44 |     await this.getCheckOutDate.fill(testdata.getCheckInDate);
+  45 |     await this.getAdultsPerRoom.selectOption({value:testdata.getAdultsPerRoom})
+  46 |     await this.getChildrensPerRoom.selectOption({value:testdata.getChildrensPerRoom})
+  47 |     await this.getSearchButton.click();
+  48 |  }
+  49 | }
+```
