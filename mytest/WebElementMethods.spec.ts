@@ -6,6 +6,7 @@ test('browserLaunch',async()=>{
 const browser :Browser=await chromium.launch({headless:false,channel:'chrome'});
 const page:Page = await browser.newPage();
 
+
 await page.goto('https://www.facebook.com/login/');
 const email:Locator=await page.locator("#email");
 

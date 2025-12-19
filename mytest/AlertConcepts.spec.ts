@@ -8,6 +8,9 @@ const page:Page=await browser.newPage()
 
 await page.goto('https://testautomationpractice.blogspot.com/');
 
+page.on('dialog',async dialog=>{
+   expect(dialog.accept);
+})
  page.on('dialog',async dialog=>{
     expect(dialog.type()).toContain('confirm');
     expect(dialog.message()).toContain('Press a button!');
